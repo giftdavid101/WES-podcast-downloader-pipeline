@@ -46,10 +46,79 @@ def main():
 
 #     episodes.append(episode_data)
 
-df = pd.DataFrame(episodes)
+# df = pd.DataFrame(episodes)
 
-print(df.head())
-print(df.shape)
+# print(df.head())
+# print(df.shape)
+
+def extract_metadata(feed):
+    """
+    Extract podcast episode metadata from the RSS feed.
+    """
+
+    episodes = []
+
+    for episode in feed.entries:
+
+        episode_data = {
+            "episode_id": episode.get("id"),
+            "title": episode.get("title"),
+            "published": episode.get("published"),
+            "duration": episode.get("itunes_duration"),
+            "summary": episode.get("summary"),
+            "episode_link": episode.get("link"),
+            "image_url": episode.get("image", {}).get("href"),
+            "audio_url": (
+                episode.get("media_content", [{}])[0].get("url")
+                if episode.get("media_content")
+                else None
+            ),
+        }
+
+        episodes.append(episode_data)
+
+    return episodes
+
+def create_dataframe(episodes):
+    """
+    Convert the extracted metadata into a pandas DataFrame.
+    """
+    df = pd.DataFrame(episodes)
+
+    return df
+
+import os
+
+def save_metadata(df):
+    """
+    Save podcast metadata to a CSV file.
+    """
+
+    output_dir = "data/raw/metadata"
+    os.makedirs(output_dir, exist_ok=True)
+
+    output_file = os.path.join(output_dir, "podcast_metadata.csv")
+
+    df.to_csv(output_file, index=False)
+
+    print(f"Metadata saved to {output_file}")
+
+def main():
+
+    feed = fetch_feed()
+
+    episodes = extract_metadata(feed)
+
+    df = create_dataframe(episodes)
+
+    print(df.head())
+    print(df.shape)
+    save_metadata(df)
+
+
+if __name__ == "__main__":
+    main()
+
 
 # pprint(episode)
 
