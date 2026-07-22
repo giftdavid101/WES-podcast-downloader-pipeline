@@ -1,6 +1,7 @@
 import feedparser
 from pprint import pprint
 import pandas as pd
+from loader import load_to_postgres
 
 RSS_FEED = "https://www.omnycontent.com/d/playlist/e73c998e-6e60-432f-8610-ae210140c5b1/96c5c41e-0bc8-4661-b184-ae32006cd726/d623ef0b-3fee-4c26-b815-ae32006cd739/podcast.rss"
 
@@ -103,6 +104,7 @@ def save_metadata(df):
 
     print(f"Metadata saved to {output_file}")
 
+
 def main():
 
     feed = fetch_feed()
@@ -114,6 +116,7 @@ def main():
     print(df.head())
     print(df.shape)
     save_metadata(df)
+    load_to_postgres(df)
 
 
 if __name__ == "__main__":
