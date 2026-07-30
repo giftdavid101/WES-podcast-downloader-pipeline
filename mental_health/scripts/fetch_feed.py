@@ -114,12 +114,19 @@ def main():
     episodes = extract_metadata(feed)
 
     df = create_dataframe(episodes)
+    df["podcast_title"] = feed.feed.title
 
     # print(df.head())
     # print(df.shape)
     save_metadata(df)
     # load_to_postgres(df)
-    load_to_postgres(df, "podcast_metadata")
+    # load_to_postgres(df, "podcast_metadata")
+    load_to_postgres(
+    df=df,
+    table_name="podcast_metadata",
+    schema="bronze"
+    )
+
 
 
 if __name__ == "__main__":
