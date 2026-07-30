@@ -137,6 +137,21 @@ cd podcast-downloader-pipeline
 
 ---
 
+## Create and Activate a Virtual Environment
+
+macOS / Linux
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+Windows
+
+python -m venv .venv
+.venv\Scripts\activate
+
+# Install Dependencies
+pip install -r requirements.txt
+
 ## Start Docker
 
 ```bash
