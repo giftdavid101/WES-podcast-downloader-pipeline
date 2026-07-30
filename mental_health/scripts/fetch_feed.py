@@ -1,3 +1,4 @@
+import os
 import feedparser
 from pprint import pprint
 import pandas as pd
@@ -85,10 +86,11 @@ def create_dataframe(episodes):
     Convert the extracted metadata into a pandas DataFrame.
     """
     df = pd.DataFrame(episodes)
+    print(df.shape)
 
     return df
 
-import os
+
 
 def save_metadata(df):
     """
@@ -113,10 +115,11 @@ def main():
 
     df = create_dataframe(episodes)
 
-    print(df.head())
-    print(df.shape)
+    # print(df.head())
+    # print(df.shape)
     save_metadata(df)
-    load_to_postgres(df)
+    # load_to_postgres(df)
+    load_to_postgres(df, "podcast_metadata")
 
 
 if __name__ == "__main__":

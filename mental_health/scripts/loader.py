@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 
-DATABASE_URL = "postgresql://airflow:airflow@localhost:5432/airflow"
+DATABASE_URL = "postgresql://airflow:airflow@localhost:5433/airflow"
 
 
 def get_engine():
